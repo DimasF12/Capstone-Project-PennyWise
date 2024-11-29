@@ -1,0 +1,36 @@
+/* Background gradient untuk seluruh halaman */
+body {
+  background-image: linear-gradient(to right, #e3f2fd, #80deea); /* Linear gradient */
+  background-size: cover; /* Membuat gradien menutupi seluruh layar */
+  background-position: center; /* Menjaga gradien tetap di tengah */
+  background-attachment: fixed; /* Agar latar belakang tetap saat scroll */
+  margin: 0; /* Menghilangkan margin default */
+  padding: 0; /* Menghilangkan padding default */
+  min-height: 100vh; /* Memastikan body memiliki tinggi penuh layar */
+}
+
+/* Konfigurasi .app-container */
+.app-container {
+  max-width: 650px; /* Membatasi lebar kontainer */
+  margin: 0 auto; /* Tengah halaman */
+  color: #FFFFFF;
+  min-height: 100vh; /* Tinggi minimal */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Isi dari atas ke bawah */
+  padding: 16px; /* Memberikan padding di sekitar kontainer */
+  box-sizing: border-box; /* Agar padding tidak merubah ukuran */
+}
+
+.feature-box{
+  text-decoration: none;
+}
+
+
+/* Responsif untuk layar kecil */
+@media (max-width: 768px) {
+  .app-container {
+    max-width: 100%; /* Penuh untuk layar kecil */
+    padding: 16px;
+  }
+}
