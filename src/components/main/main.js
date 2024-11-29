@@ -1,6 +1,10 @@
 import React from 'react';
 import './main.css';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalculator } from '@fortawesome/free-solid-svg-icons'; 
+import { faMagnifyingGlassDollar} from '@fortawesome/free-solid-svg-icons'; 
+import {faPiggyBank} from '@fortawesome/free-solid-svg-icons'; 
 
 
 const Main = ({ username }) => {
@@ -20,19 +24,25 @@ const Main = ({ username }) => {
       <div className="feature-group">
         {/* Tracking Keuangan */}
         <div className="feature-box">
-          <div className="feature-icon"></div>
+          <div className = "feature-icon">
+            <FontAwesomeIcon icon={faMagnifyingGlassDollar} size="2xl"  />
+          </div>
           <div className="feature-text">Tracking Keuangan</div>
         </div>
 
         {/* Kalkulator Investasi */}
         <Link to="./kalkulator/KalkulatorInvestasi" className="feature-box">
-          <div className="feature-icon"></div>
+          <div className = "feature-icon">
+            <FontAwesomeIcon icon={faCalculator} size="2xl"  />
+          </div>
           <div className="feature-text">Kalkulator Investasi</div>
         </Link>
 
         {/* Perencanaan Tabungan */}
         <div className="feature-box">
-          <div className="feature-icon"></div>
+          <div className = "feature-icon">
+            <FontAwesomeIcon icon={faPiggyBank} size="2xl"  />
+          </div>
           <div className="feature-text">Perencanaan Tabungan</div>
         </div>
       </div>

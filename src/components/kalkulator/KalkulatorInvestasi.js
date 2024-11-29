@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import './KalkulatorInvestasi.css';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalculator } from '@fortawesome/free-solid-svg-icons'; 
+
 
 const KalkulatorInvestasi = ({ username }) => {
   const [currentStep, setCurrentStep] = useState(1); // Menyimpan langkah input yang aktif
@@ -36,16 +39,15 @@ const KalkulatorInvestasi = ({ username }) => {
   };
 
   return (
+
     <div className="kalkulator-investasi-container">
+
       {/* Navigation Bar */}
       <div className="nav-container">
         <Link to="../" className="back-button">Back</Link>
         <div className="nav-title">
-          <img
-            className="calculator-icon"
-            src="https://via.placeholder.com/45x45"
-            alt="Calculator Icon"
-          />
+          {/* Menggunakan ikon FontAwesome */}
+          <FontAwesomeIcon icon={faCalculator} className="calculator-icon" />
           <div className="title-text">Kalkulator Investasi</div>
         </div>
       </div>

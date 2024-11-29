@@ -1,7 +1,7 @@
 /* Animasi Ketik (Typewriter Effect) */
 .animasi-teks {
   font-size: 24px;
-  width: 100%;
+  width: 90%;
   white-space: nowrap;
   overflow: hidden;
   display: inline-block;
@@ -45,24 +45,25 @@
   background: none;
   border: none;
   color: #ffffff;
-  font-size: 16px;
+  font-size: 20px;
   cursor: pointer;
+  font-weight: 900;
+  text-decoration: none;
 }
 
 .nav-title {
   display: flex;
-  align-items: center;
   margin: auto;
 }
 
 .calculator-icon {
-  width: 45px;
-  height: 45px;
-  margin-right: 12px;
+  font-size: 20px;  
+  color: white;     
+  margin-right: 10px; 
 }
 
 .title-text {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
 }
 
@@ -211,3 +212,4 @@
 .submit-button:hover {
   background-color: #4dd0e1;
 }
+
