@@ -1,0 +1,316 @@
+/* Container Utama */
+.tracking-container {
+    width: 1065px;
+    height: 1500px;
+    position: relative;
+    background: linear-gradient(51deg, #e3f2fd 14%, #80deea 100%);
+  }
+  
+  /* Header Section */
+  .header-tracking {
+    width: 984px;
+    height: 174px;
+    position: absolute;
+    top: 82px;
+    left: 40px;
+  }
+  
+  .header-tracking-background {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 77, 64, 0.8);
+    border-radius: 12px;
+  }
+  
+  .header-tracking-profile {
+    width: 55px;
+    height: 53px;
+    position: absolute;
+    top: 9px;
+    left: 17px;
+    background: #d9d9d9;
+    border-radius: 50%;
+  }
+  
+  .header-tracking-greeting,
+  .header-tracking-company,
+  .header-tracking-tagline {
+    position: absolute;
+  }
+  
+  .header-tracking-greeting {
+    top: 66px;
+    left: 17px;
+    color: #e3f2fd;
+    font-size: 31px;
+    font-weight: 800;
+  }
+  
+  .header-tracking-company {
+    top: 113px;
+    left: 17px;
+    color: #c1c1c1;
+    font-size: 24px;
+    font-weight: 400;
+  }
+  
+  .header-tracking-tagline {
+    top: 146px;
+    left: 17px;
+    color: #9e9e9e;
+    font-size: 15px;
+    font-weight: 400;
+  }
+  
+  /* Saldo Section */
+  .saldo-tracking {
+    width: 921px;
+    height: 108px;
+    position: absolute;
+    top: 520px;
+    left: 79px;
+  }
+  
+  .saldo-tracking-background {
+    width: 100%;
+    height: 100%;
+    background: #fdfdfd;
+    border-radius: 20px;
+  }
+  
+  .saldo-tracking-info {
+    width: 371px;
+    height: 87px;
+    position: absolute;
+    top: 8px;
+    left: 22px;
+  }
+  
+  .saldo-tracking-box {
+    width: 100%;
+    height: 100%;
+    background: white;
+    border-radius: 20px;
+  }
+  
+  .saldo-tracking-label,
+  .saldo-tracking-value {
+    position: absolute;
+    color: #1e1e1e;
+    font-size: 24px;
+    font-weight: 600;
+  }
+  
+  .saldo-tracking-label {
+    top: 11px;
+    left: 16px;
+  }
+  
+  .saldo-tracking-value {
+    top: 46px;
+    left: 16px;
+  }
+  
+  /* Income & Outcome Section */
+  .income-outcome-tracking .income-section-tracking,
+  .income-outcome-tracking .outcome-section-tracking {
+    width: 414px;
+    height: 86px;
+    position: absolute;
+  }
+  
+  .income-section-tracking {
+    top: 365px;
+    left: 81px;
+  }
+  
+  .outcome-section-tracking {
+    top: 363px;
+    left: 594px;
+  }
+  
+  .income-background-tracking,
+  .outcome-background-tracking {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 77, 64, 0.8);
+    border-radius: 10px;
+  }
+  
+  .income-label-tracking,
+  .outcome-label-tracking {
+    position: absolute;
+    top: 21px;
+    color: white;
+    font-size: 48px;
+    font-weight: 800;
+  }
+  
+  .income-label-tracking {
+    left: 108px;
+  }
+  
+  .outcome-label-tracking {
+    left: 115px;
+  }
+  
+  .income-icon-tracking,
+  .outcome-icon-tracking {
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    top: 15px;
+    background: #d9d9d9;
+    border-radius: 10px;
+  }
+  
+  .income-icon-tracking {
+    left: 27px;
+  }
+  
+  .outcome-icon-tracking {
+    left: 26px;
+  }
+  
+  /* Arsip Keuangan Section */
+  .arsip-section-tracking {
+    width: 921px;
+    height: 726px;
+    position: absolute;
+    top: 674px;
+    left: 79px;
+  }
+  
+  .arsip-background-tracking {
+    width: 100%;
+    height: 100%;
+    background: #80deea;
+    border-radius: 20px;
+  }
+  
+  .arsip-item-tracking {
+    width: 845px;
+    height: 231px;
+    position: absolute;
+  }
+  
+  .arsip-item-tracking:nth-child(1) {
+    top: 39px;
+  }
+  
+  .arsip-item-tracking:nth-child(2) {
+    top: 294px;
+  }
+  
+  .arsip-item-background-tracking {
+    width: 100%;
+    height: 100%;
+    background: white;
+    border-radius: 20px;
+  }
+  
+  .arsip-item-icon-tracking {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 66px;
+    left: 710px;
+    background: #d9d9d9;
+    border-radius: 20px;
+  }
+  
+  .arsip-item-info-tracking {
+    width: 371px;
+    height: 175px;
+    position: absolute;
+    top: 30px;
+    left: 19px;
+  }
+  
+  .arsip-info-box-tracking {
+    width: 100%;
+    height: 100%;
+    background: #80deea;
+    border-radius: 20px;
+  }
+  
+  .arsip-type-tracking,
+  .arsip-value-tracking,
+  .arsip-date-tracking,
+  .arsip-desc-tracking {
+    position: absolute;
+    color: #9e9e9e;
+    font-size: 20px;
+    font-weight: 600;
+  }
+  
+  .arsip-type-tracking {
+    top: 13px;
+    left: 16px;
+    color: #1e1e1e;
+  }
+  
+  .arsip-value-tracking {
+    top: 56px;
+    left: 16px;
+    color: #1e1e1e;
+  }
+  
+  .arsip-date-tracking {
+    top: 98px;
+    left: 16px;
+  }
+  
+  .arsip-desc-tracking {
+    top: 136px;
+    left: 16px;
+  }
+  
+  /* Submit Section */
+  .submit-section-tracking {
+    width: 699px;
+    height: 105px;
+    position: absolute;
+    top: 1247px;
+    left: 263px;
+  }
+  
+  .submit-background-tracking {
+    width: 100%;
+    height: 100%;
+    background: #80deea;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+  }
+  
+  .submit-button-tracking {
+    width: 75px;
+    height: 65px;
+    position: absolute;
+    top: 20px;
+    left: 592px;
+  }
+  
+  .submit-icon-background-tracking {
+    width: 100%;
+    height: 100%;
+    background: #4ad7f7;
+    border-radius: 20px;
+  }
+  
+  .submit-icon-tracking {
+    width: 59px;
+    height: 67px;
+    transform: rotate(90deg);
+  }
+  
+  .submit-text-tracking {
+    width: 581px;
+    position: absolute;
+    top: 39px;
+    left: 32px;
+    color: black;
+    font-size: 22px;
+    font-weight: 700;
+  }
+  

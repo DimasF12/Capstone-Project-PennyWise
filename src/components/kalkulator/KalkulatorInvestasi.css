@@ -26,6 +26,7 @@
 /* Container utama */
 .kalkulator-investasi-container {
   background-color: #02697b;
+  max-width: 600px;
   padding: 24px;
   border-radius: 12px;
   max-width: 500px;
@@ -54,6 +55,7 @@
 .nav-title {
   display: flex;
   margin: auto;
+
 }
 
 .calculator-icon {
@@ -212,4 +214,3 @@
 .submit-button:hover {
   background-color: #4dd0e1;
 }
-
