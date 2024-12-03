@@ -1,89 +1,79 @@
 import React from "react";
 import "./TrackingKeuangan.css";
+import { useNavigate } from 'react-router-dom';
+
+// Komponen Arsip Keuangan
+const ArsipItem = ({ type, value, date, desc }) => (
+  <div className="arsip-item-tracking">
+    <div className="arsip-item-info-tracking">
+      <div className="arsip-type-tracking">{type}</div>
+      <div className="arsip-value-tracking">{value}</div>
+      <div className="arsip-date-tracking">{date}</div>
+      <div className="arsip-desc-tracking">{desc}</div>
+    </div>
+    <div className="arsip-item-icon-tracking">ppppp</div>
+  </div>
+);
 
 const TrackingKeuangan = ({ username }) => {
+  // Data arsip contoh
+  const arsipData = [
+    { type: "Income", value: "Rp. XXXXXXX", date: "DD/MM/YYYY", desc: "Desc" },
+    { type: "Outcome", value: "Rp. XXXXXXX", date: "DD/MM/YYYY", desc: "Desc" },
+  ];
+  const navigate = useNavigate();
   return (
     <div className="tracking-container">
+      <button className="tracking-back-button" onClick={() => navigate(-1)}>
+        Kembali
+      </button>
       {/* Header Section */}
-      <div className="header-tracking">
-        <div className="header-tracking-background"></div>
+      <header className="header-tracking">
         <div className="header-tracking-profile"></div>
-        <div className="header-tracking-greeting">Hi, {username}</div>
+        <h1 className="header-tracking-greeting">Hi, {username}</h1>
         <div className="header-tracking-company">Pennywise</div>
-        <div className="header-tracking-tagline">Manage Your Finances Easily</div>
-      </div>
+        <p className="header-tracking-tagline">Manage Your Finances Easily</p>
+      </header>
 
       {/* Saldo Section */}
-      <div className="saldo-tracking">
-        <div className="saldo-tracking-background"></div>
-        <div className="saldo-tracking-info">
-          <div className="saldo-tracking-box"></div>
+      <section className="saldo-tracking">
+        <div className="saldo-tracking-box">
           <div className="saldo-tracking-label">Saldo</div>
           <div className="saldo-tracking-value">Rp. XXXXXXX</div>
         </div>
-      </div>
+      </section>
 
       {/* Income & Outcome Section */}
-      <div className="income-outcome-tracking">
-        {/* Income Section */}
+      <section className="income-outcome-tracking">
         <div className="income-section-tracking">
-          <div className="income-background-tracking"></div>
           <div className="income-label-tracking">INCOME</div>
           <div className="income-icon-tracking"></div>
         </div>
-
-        {/* Outcome Section */}
         <div className="outcome-section-tracking">
-          <div className="outcome-background-tracking"></div>
           <div className="outcome-label-tracking">OUTCOME</div>
           <div className="outcome-icon-tracking"></div>
         </div>
-      </div>
+      </section>
 
       {/* Arsip Keuangan Section */}
-      <div className="arsip-section-tracking">
-        {/* Arsip Item 1 */}
-        <div className="arsip-item-tracking">
-          <div className="arsip-item-background-tracking"></div>
-          <div className="arsip-item-icon-tracking"></div>
-          <div className="arsip-item-info-tracking">
-            <div className="arsip-info-box-tracking"></div>
-            <div className="arsip-type-tracking">Income</div>
-            <div className="arsip-value-tracking">Rp. XXXXXXX</div>
-            <div className="arsip-date-tracking">DD/MM/YYYY</div>
-            <div className="arsip-desc-tracking">Desc</div>
-          </div>
-        </div>
-
-        {/* Arsip Item 2 */}
-        <div className="arsip-item-tracking">
-          <div className="arsip-item-background-tracking"></div>
-          <div className="arsip-item-icon-tracking"></div>
-          <div className="arsip-item-info-tracking">
-            <div className="arsip-info-box-tracking"></div>
-            <div className="arsip-type-tracking">Outcome</div>
-            <div className="arsip-value-tracking">Rp. XXXXXXX</div>
-            <div className="arsip-date-tracking">DD/MM/YYYY</div>
-            <div className="arsip-desc-tracking">Desc</div>
-          </div>
-        </div>
-      </div>
+      <section className="arsip-section-tracking">
+        {arsipData.map((item, index) => (
+          <ArsipItem
+            key={index}
+            type={item.type}
+            value={item.value}
+            date={item.date}
+            desc={item.desc}
+          />
+        ))}
+      </section>
 
       {/* Submit Section */}
-      <div className="submit-section-tracking">
-        <div className="submit-background-tracking"></div>
-        <div className="submit-button-tracking">
-          <div className="submit-icon-background-tracking"></div>
-          <img
-            className="submit-icon-tracking"
-            src="https://via.placeholder.com/58x67"
-            alt="Submit"
-          />
-        </div>
-        <div className="submit-text-tracking">
+      <section className="submit-section-tracking">
+        <button className="submit-button-tracking">
           Ayo Lihat Analisan Laporan Aktivitas Keuangan
-        </div>
-      </div>
+        </button>
+      </section>
     </div>
   );
 };
