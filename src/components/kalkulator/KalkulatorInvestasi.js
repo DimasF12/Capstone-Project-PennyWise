@@ -2,51 +2,43 @@ import React, { useState } from 'react';
 import './KalkulatorInvestasi.css';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalculator } from '@fortawesome/free-solid-svg-icons'; 
-
+import { faCalculator } from '@fortawesome/free-solid-svg-icons';
 
 const KalkulatorInvestasi = ({ username }) => {
   const [currentStep, setCurrentStep] = useState(1); // Menyimpan langkah input yang aktif
   const [inputs, setInputs] = useState({}); // Menyimpan nilai setiap input
 
-  // Fungsi untuk memformat angka dengan pemisah ribuan
   const formatNumber = (value) => {
     if (!value) return '';
-    // Mengganti angka menjadi format ribuan, misal 1000 menjadi 1,000
     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
 
-  // Fungsi untuk menangani perubahan input
   const handleInputChange = (e, fieldName) => {
-    const rawValue = e.target.value.replace(/,/g, ''); // Hilangkan koma untuk pengolahan lebih lanjut
-
-    // Periksa apakah input adalah angka yang valid dan bukan string kosong
+    const rawValue = e.target.value.replace(/,/g, '');
     if (!isNaN(rawValue) && rawValue !== '') {
-      // Format angka dengan pemisah ribuan setelah input
       setInputs({ ...inputs, [fieldName]: formatNumber(rawValue) });
     } else if (rawValue === '') {
-      // Jika input kosong, biarkan input tersebut kosong
       setInputs({ ...inputs, [fieldName]: '' });
     }
   };
 
-  // Fungsi untuk menangani tombol Enter dan melanjutkan ke input berikutnya
   const handleKeyPress = (e, index) => {
     if (e.key === 'Enter' && currentStep === index + 1) {
-      // Lanjutkan ke input berikutnya jika Enter ditekan
-      setCurrentStep((prevStep) => prevStep + 1); 
+      setCurrentStep((prevStep) => prevStep + 1);
     }
   };
 
+  const handleButtonClick = (fieldName, value) => {
+    setInputs({ ...inputs, [fieldName]: value }); // Simpan nilai tombol
+    setCurrentStep((prevStep) => prevStep + 1); // Pindah ke langkah berikutnya
+  };
+
   return (
-
     <div className="kalkulator-investasi-container">
-
       {/* Navigation Bar */}
       <div className="nav-container">
         <Link to="../" className="back-button">Back</Link>
         <div className="nav-title">
-          {/* Menggunakan ikon FontAwesome */}
           <FontAwesomeIcon icon={faCalculator} className="calculator-icon" />
           <div className="title-text">Kalkulator Investasi</div>
         </div>
@@ -62,12 +54,28 @@ const KalkulatorInvestasi = ({ username }) => {
 
       {/* Calculator Section */}
       <div className="calculator-container">
-        {[ 
+        {[
           { label: 'Jumlah uang yang ingin kamu capai', prefix: 'Rp', fieldName: 'uangCapai' },
           { label: 'Jumlah waktu yang kamu perlukan', suffix: 'Tahun lagi', fieldName: 'waktu' },
           { label: 'Uang yang kamu miliki saat ini', prefix: 'Rp', fieldName: 'uangSaatIni' },
-          { label: 'Kamu menabung setiap', suffix: 'Tahun lagi', fieldName: 'menabung' },
-          { label: 'Kamu akan menambahkan dana pada', suffix: 'Tahun lagi', fieldName: 'dana' },
+          {
+            label: 'Kamu menabung setiap',
+            fieldName: 'menabung',
+            isButtonGroup: true,
+            buttonOptions: [
+              { text: 'Akhir Bulan', value: 'akhirbulan' },
+              { text: 'Awal Bulan', value: 'awalbulan' },
+            ],
+          },
+          {
+            label: 'Kamu akan menambahkan dana pada',
+            fieldName: 'dana',
+            isButtonGroup: true,
+            buttonOptions: [
+              { text: 'Akhir Bulan', value: 'akhirbulan' },
+              { text: 'Awal Bulan', value: 'awalbulan' },
+            ],
+          },
           { label: 'Target investasimu tiap bulan', prefix: 'Rp', fieldName: 'targetInvestasi' },
           { label: 'Kamu akan investasi di produk yang returnnya', suffix: '%/Tahun', fieldName: 'returnInvestasi' },
         ].map((input, index) => (
@@ -78,19 +86,36 @@ const KalkulatorInvestasi = ({ username }) => {
             <span className="circle-icon"></span>
             <label className={`input-label ${currentStep === index + 1 ? 'animasi-teks' : ''}`}>
               {input.label}
-            </label> {/* Apply typing animation only when step is active */}
-            <div className="input-field">
-              {input.prefix && <span className="currency">{input.prefix}</span>}
-              <input
-                type="text" // Changed to text input instead of number
-                className="input"
-                value={inputs[input.fieldName] || ''}
-                placeholder="0"
-                onChange={(e) => handleInputChange(e, input.fieldName)}
-                onKeyDown={(e) => handleKeyPress(e, index)}
-              />
-              {input.suffix && <span className="currency">{input.suffix}</span>}
-            </div>
+            </label>
+
+            {input.isButtonGroup ? (
+              <div className="button-group">
+                {input.buttonOptions.map((option) => (
+                  <button
+                    key={option.value}
+                    className={`choice-button ${
+                      inputs[input.fieldName] === option.value ? 'active' : ''
+                    }`}
+                    onClick={() => handleButtonClick(input.fieldName, option.value)}
+                  >
+                    {option.text}
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <div className="input-field">
+                {input.prefix && <span className="currency">{input.prefix}</span>}
+                <input
+                  type="text"
+                  className="input"
+                  value={inputs[input.fieldName] || ''}
+                  placeholder="0"
+                  onChange={(e) => handleInputChange(e, input.fieldName)}
+                  onKeyDown={(e) => handleKeyPress(e, index)}
+                />
+                {input.suffix && <span className="currency">{input.suffix}</span>}
+              </div>
+            )}
           </div>
         ))}
 

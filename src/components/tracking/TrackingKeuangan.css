@@ -109,6 +109,8 @@
   color: white;
   font-size: 20px;
   font-weight: 800;
+  display: flex;
+  text-align: center;
 }
 
 .income-section-tracking:hover,
@@ -116,6 +118,11 @@
   background: #055e54;
   transform: scale(1.05);
   transition: 0.3s;
+}
+
+.outcome-label-tracking, 
+.income-label-tracking{
+  margin: 10px;
 }
 
 /* Arsip Keuangan Section */
@@ -232,3 +239,4 @@
   transform: scale(1.05);
   transition: transform 0.2s ease;
 }
+

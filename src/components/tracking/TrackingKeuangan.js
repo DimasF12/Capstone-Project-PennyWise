@@ -1,32 +1,28 @@
-import React from "react";
-import "./TrackingKeuangan.css";
+import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-
-// Komponen Arsip Keuangan
-const ArsipItem = ({ type, value, date, desc }) => (
-  <div className="arsip-item-tracking">
-    <div className="arsip-item-info-tracking">
-      <div className="arsip-type-tracking">{type}</div>
-      <div className="arsip-value-tracking">{value}</div>
-      <div className="arsip-date-tracking">{date}</div>
-      <div className="arsip-desc-tracking">{desc}</div>
-    </div>
-    <div className="arsip-item-icon-tracking">ppppp</div>
-  </div>
-);
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faInbox } from '@fortawesome/free-solid-svg-icons';
+import IncomeModal from "./modal/IncomeModal"; // Pastikan path modal sesuai dengan struktur folder Anda
+import "./TrackingKeuangan.css";
 
 const TrackingKeuangan = ({ username }) => {
+  // State untuk modal
+  const [isModalVisible, setModalVisible] = useState(false);
+
   // Data arsip contoh
   const arsipData = [
     { type: "Income", value: "Rp. XXXXXXX", date: "DD/MM/YYYY", desc: "Desc" },
     { type: "Outcome", value: "Rp. XXXXXXX", date: "DD/MM/YYYY", desc: "Desc" },
   ];
+
   const navigate = useNavigate();
+
   return (
     <div className="tracking-container">
       <button className="tracking-back-button" onClick={() => navigate(-1)}>
         Kembali
       </button>
+
       {/* Header Section */}
       <header className="header-tracking">
         <div className="header-tracking-profile"></div>
@@ -45,35 +41,47 @@ const TrackingKeuangan = ({ username }) => {
 
       {/* Income & Outcome Section */}
       <section className="income-outcome-tracking">
-        <div className="income-section-tracking">
-          <div className="income-label-tracking">INCOME</div>
-          <div className="income-icon-tracking"></div>
+        <div
+          className="income-section-tracking"
+          onClick={() => setModalVisible(true)} // Buka modal saat Income diklik
+        >
+          <div className="income-icon-tracking">
+            <FontAwesomeIcon icon={faInbox} size="2xl" />
+          </div>
+          <div className="income-label-tracking">Pemasukan</div>
         </div>
+
         <div className="outcome-section-tracking">
-          <div className="outcome-label-tracking">OUTCOME</div>
-          <div className="outcome-icon-tracking"></div>
+          <div className="income-icon-tracking">
+            <FontAwesomeIcon icon={faInbox} size="2xl" />
+          </div>
+          <div className="outcome-label-tracking">Pengeluaran</div>
         </div>
       </section>
 
       {/* Arsip Keuangan Section */}
       <section className="arsip-section-tracking">
         {arsipData.map((item, index) => (
-          <ArsipItem
-            key={index}
-            type={item.type}
-            value={item.value}
-            date={item.date}
-            desc={item.desc}
-          />
+          <div key={index} className="arsip-item-tracking">
+            <div className="arsip-item-info-tracking">
+              <div className="arsip-type-tracking">{item.type}</div>
+              <div className="arsip-value-tracking">{item.value}</div>
+              <div className="arsip-date-tracking">{item.date}</div>
+              <div className="arsip-desc-tracking">{item.desc}</div>
+            </div>
+          </div>
         ))}
       </section>
 
       {/* Submit Section */}
       <section className="submit-section-tracking">
         <button className="submit-button-tracking">
-          Ayo Lihat Analisan Laporan Aktivitas Keuangan
+          Ayo Lihat Analisa Laporan Aktivitas Keuangan
         </button>
       </section>
+
+      {/* Income Modal */}
+      <IncomeModal isOpen={isModalVisible} onClose={() => setModalVisible(false)} />
     </div>
   );
 };
