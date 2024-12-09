@@ -5,9 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalculator } from '@fortawesome/free-solid-svg-icons';
 
 const KalkulatorInvestasi = ({ username }) => {
-  const [currentStep, setCurrentStep] = useState(1);
-  const [inputs, setInputs] = useState({});
-  const [result, setResult] = useState(null);
+  const [currentStep, setCurrentStep] = useState(1); // Menyimpan langkah input yang aktif
+  const [inputs, setInputs] = useState({}); // Menyimpan nilai setiap input
 
   const formatNumber = (value) => {
     if (!value) return '';
@@ -30,97 +29,37 @@ const KalkulatorInvestasi = ({ username }) => {
   };
 
   const handleButtonClick = (fieldName, value) => {
-    setInputs({ ...inputs, [fieldName]: value });
-    setCurrentStep((prevStep) => prevStep + 1);
-  };
-
-  const calculateFutureValue = (initialAmount, monthlyInvestment, annualReturnRate, years) => {
-    let currentAmount = initialAmount;
-    const monthlyReturnRate = annualReturnRate / 12 / 100;
-    const totalMonths = years * 12;
-
-    for (let i = 0; i < totalMonths; i++) {
-      currentAmount += monthlyInvestment;
-      currentAmount *= (1 + monthlyReturnRate);
-    }
-
-    return currentAmount;
-  };
-
-  const calculateRequiredMonthlyInvestment = (initialAmount, targetAmount, annualReturnRate, years) => {
-    const monthlyReturnRate = annualReturnRate / 12 / 100;
-    const totalMonths = years * 12;
-    const fvWithoutInvestment = initialAmount * Math.pow(1 + monthlyReturnRate, totalMonths);
-    const futureValueNeeded = targetAmount - fvWithoutInvestment;
-
-    const requiredMonthlyInvestment = futureValueNeeded * monthlyReturnRate / (Math.pow(1 + monthlyReturnRate, totalMonths) - 1);
-    return requiredMonthlyInvestment;
-  };
-
-  const calculateRequiredDuration = (initialAmount, monthlyInvestment, annualReturnRate, targetAmount) => {
-    let currentAmount = initialAmount;
-    const monthlyReturnRate = annualReturnRate / 12 / 100;
-    let months = 0;
-
-    while (currentAmount < targetAmount) {
-      currentAmount += monthlyInvestment;
-      currentAmount *= (1 + monthlyReturnRate);
-      months++;
-    }
-
-    return months / 12;
-  };
-
-  const handleSubmit = () => {
-    const initialAmount = parseFloat(inputs.uangSaatIni.replace(/,/g, ''));
-    const monthlyInvestment = parseFloat(inputs.targetInvestasi.replace(/,/g, ''));
-    const annualReturnRate = parseFloat(inputs.returnInvestasi);
-    const years = parseInt(inputs.waktu, 10);
-    const targetAmount = parseFloat(inputs.uangCapai.replace(/,/g, ''));
-
-    const futureValue = calculateFutureValue(initialAmount, monthlyInvestment, annualReturnRate, years);
-
-    if (futureValue >= targetAmount) {
-      setResult(`Selamat! Anda akan memiliki Rp ${futureValue.toFixed(2)} setelah ${years} tahun, yang memenuhi target Anda.`);
-    } else {
-      const solution = window.prompt("Anda tidak akan mencapai target Anda. Apakah Anda ingin meningkatkan investasi bulanan Anda (1) atau memperpanjang durasi (2)? Masukkan 1 atau 2:");
-
-      if (solution === "1") {
-        const requiredMonthlyInvestment = calculateRequiredMonthlyInvestment(initialAmount, targetAmount, annualReturnRate, years);
-        setResult(`Untuk mencapai target Rp ${targetAmount}, Anda perlu berinvestasi Rp ${requiredMonthlyInvestment.toFixed(2)} setiap bulan.`);
-      } else if (solution === "2") {
-        const requiredYears = calculateRequiredDuration(initialAmount, monthlyInvestment, annualReturnRate, targetAmount);
-        setResult(`Untuk mencapai target Rp ${targetAmount}, Anda perlu berinvestasi selama ${requiredYears.toFixed(2)} tahun.`);
-      } else {
-        setResult("Pilihan tidak valid. Silakan masukkan 1 atau 2.");
-      }
-    }
+    setInputs({ ...inputs, [fieldName]: value }); // Simpan nilai tombol
+    setCurrentStep((prevStep) => prevStep + 1); // Pindah ke langkah berikutnya
   };
 
   return (
     <div className="kalkulator-investasi-container">
+      {/* Navigation Bar */}
       <div className="nav-container">
-        <Link to="../" className="back-button">Kembali</Link>
+        <Link to="../" className="back-button">Back</Link>
         <div className="nav-title">
           <FontAwesomeIcon icon={faCalculator} className="calculator-icon" />
           <div className="title-text">Kalkulator Investasi</div>
         </div>
       </div>
 
+      {/* Header Section */}
       <div className="header-container">
         <div className="profile-icon"></div>
         <div className="greeting-text">Hi, {username}</div>
         <div className="company-name">Pennywise</div>
-        <div className="tagline">Atur Keuangan Anda dengan Mudah</div>
+        <div className="tagline">Manage Your Finances Easily</div>
       </div>
 
+      {/* Calculator Section */}
       <div className="calculator-container">
         {[
-          { label: 'Jumlah uang yang ingin Anda capai', prefix: 'Rp', fieldName: 'uangCapai' },
-          { label: 'Jumlah waktu yang Anda perlukan', suffix: 'Tahun lagi', fieldName: 'waktu' },
-          { label: 'Uang yang Anda miliki saat ini', prefix: 'Rp', fieldName: 'uangSaatIni' },
+          { label: 'Jumlah uang yang ingin kamu capai', prefix: 'Rp', fieldName: 'uangCapai' },
+          { label: 'Jumlah waktu yang kamu perlukan', suffix: 'Tahun lagi', fieldName: 'waktu' },
+          { label: 'Uang yang kamu miliki saat ini', prefix: 'Rp', fieldName: 'uangSaatIni' },
           {
-            label: 'Anda menabung setiap',
+            label: 'Kamu menabung setiap',
             fieldName: 'menabung',
             isButtonGroup: true,
             buttonOptions: [
@@ -129,7 +68,7 @@ const KalkulatorInvestasi = ({ username }) => {
             ],
           },
           {
-            label: 'Anda akan menambahkan dana pada',
+            label: 'Kamu akan menambahkan dana pada',
             fieldName: 'dana',
             isButtonGroup: true,
             buttonOptions: [
@@ -137,8 +76,8 @@ const KalkulatorInvestasi = ({ username }) => {
               { text: 'Awal Bulan', value: 'awalbulan' },
             ],
           },
-          { label: 'Target investasi Anda tiap bulan', prefix: 'Rp', fieldName: 'targetInvestasi' },
-          { label: 'Anda akan berinvestasi di produk yang returnnya', suffix: '%/Tahun', fieldName: 'returnInvestasi' },
+          { label: 'Target investasimu tiap bulan', prefix: 'Rp', fieldName: 'targetInvestasi' },
+          { label: 'Kamu akan investasi di produk yang returnnya', suffix: '%/Tahun', fieldName: 'returnInvestasi' },
         ].map((input, index) => (
           <div
             key={index}
@@ -181,10 +120,8 @@ const KalkulatorInvestasi = ({ username }) => {
         ))}
 
         <div className="send-button">
-          <button className="submit-button" onClick={handleSubmit}>Ayo lihat hasil strategimu</button>
+          <button className="submit-button">Ayo lihat hasil strategimu</button>
         </div>
-
-        {result && <div className="result">{result}</div>}
       </div>
     </div>
   );
