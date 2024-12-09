@@ -63,8 +63,8 @@ const KalkulatorInvestasi = ({ username }) => {
             fieldName: 'menabung',
             isButtonGroup: true,
             buttonOptions: [
-              { text: 'Akhir Bulan', value: 'akhirbulan' },
-              { text: 'Awal Bulan', value: 'awalbulan' },
+              { text: 'Setiap Tahun', value: 'setiaptahun' },
+              { text: 'Setiap Bulan', value: 'setiapbulan' },
             ],
           },
           {
