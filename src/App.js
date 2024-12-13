@@ -4,6 +4,7 @@ import Main from './components/main/main';
 import KalkulatorInvestasi from './components/kalkulator/KalkulatorInvestasi';
 import Perencanaan from './components/perencanaan/Perencanaan';
 import TrackingKeuangan from './components/tracking/TrackingKeuangan';
+import HasilStrategi from './components/kalkulator/HasilStrategi'; 
 
 const App = () => {
   return (
