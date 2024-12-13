@@ -1,0 +1,101 @@
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed; /* Membuat overlay menutupi seluruh layar */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Latar belakang transparan */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative; /* Menjadikan parent container relatif untuk posisi tombol close */
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 500px; /* Lebar modal */
+  max-width: 90%;
+  opacity: 90%;
+}
+
+/* Tombol Close */
+.close-button {
+  position: absolute; /* Posisi tombol absolute */
+  top: 10px; /* Menempatkan tombol 10px dari atas */
+  right: 10px; /* Menempatkan tombol 10px dari kanan */
+  font-size: 24px; /* Ukuran font */
+  background: none;
+  border: none;
+  color: #333;
+  cursor: pointer;
+}
+
+/* Styling untuk tombol close saat hover */
+.close-button:hover {
+  color: red; /* Warna merah saat hover */
+}
+
+/* Form Styling */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.label-modal {
+  display: block;
+  margin-bottom: 8px;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* Tombol Simpan */
+.submit-modal-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.submit-modal-button:hover {
+  background-color: #45a049;
+}
+
+/* Info Buttons */
+.info-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.info-button {
+  flex: 1;
+  padding: 10px;
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.info-button:hover {
+  background-color: #ddd;
+}
+
+#amount [type="number"]::-webkit-outer-spin-button,
+#amount[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;  
+  margin: 0;              
+}
