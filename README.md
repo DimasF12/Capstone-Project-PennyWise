@@ -1,12 +1,20 @@
 # Capstone-Project-PennyWise
 
-# ABSTRACT
-Effective personal finance management is increasingly crucial in today's consumer-driven world. However, traditional budgeting tools often fall short in addressing the emotional and behavioral factors that influence spending habits. PennyWise, the Smart Expense Tracker, aims to revolutionize personal finance by leveraging machine learning and cloud technology to provide a comprehensive and personalized solution. By analyzing spending patterns and emotional triggers, PennyWise empowers users to make informed financial decisions and achieve their long-term financial goals.
+# Machine Learning Path
 
-# The Problem
-Consumerism, fueled by social media and easy access to credit, has led to careless spending habits. People often spend impulsively without considering the long-term consequences.
 
-# Our Solution
-PennyWise, the Smart Expense Tracker, addresses this issue by combining practical budgeting tools with insights into emotional and behavioral spending patterns. By understanding the underlying reasons behind spending habits, users can make more informed financial decisions.
+# About The Model :
+Developed with Bidirectional Long Short-Term Memory (LSTM) architecture, our model predicts the savings trends from user.
+The TensorFlow architecture is utilized in this model to build a robust machine learning pipeline for time-series forecasting. The model leverages TensorFlow's sequential API to stack layers, starting with LSTM layers for learning temporal patterns in sequential data, wrapped with bidirectional layers to improve context understanding. Dropout layers are incorporated to reduce overfitting, ensuring the model generalizes well on unseen data. TensorFlow's capabilities allow seamless integration of preprocessing, training, and evaluation processes, enabling efficient forecasting of daily savings and cumulative savings trends based on historical data.
 
-Our platform offers a personalized and engaging experience that encourages users to develop healthier financial habits. By focusing on both practical and emotional aspects of finance, PennyWise stands out as a modern solution for today's financial challenges.
+
+# ML team task
+- Collect and make the dataset
+- Building the machine learning model
+- Testing the model
+  
+# Folder Struture
+Dataset :
+ Dataset that are used to make the model
+Model :
+  The model that are use for the project
