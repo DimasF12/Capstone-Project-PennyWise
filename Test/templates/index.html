@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rekomendasi Pengeluaran</title>
+  </head>
+  <body>
+    <h1>Rekomendasi Pengeluaran</h1>
+    <form method="POST" action="/">
+      <label for="amount">Jumlah Pengeluaran:</label>
+      <input type="number" name="amount" id="amount" required /><br />
+
+      <label for="category">Kategori:</label>
+      <select name="category" id="category" required>
+        <option value="Sekunder">Sekunder</option>
+        <option value="Primer">Primer</option>
+        <option value="Tersier">Tersier</option>
+        <option value="Tidak Terduga">Tidak Terduga</option></select
+      ><br />
+
+      <label for="reason">Alasan:</label>
+      <select name="reason" id="reason" required>
+        <option value="Luxury">Luxury</option>
+        <option value="Irasional">Irasional</option>
+        <option value="Kewajiban">Kewajiban</option>
+        <option value="Esensial">Esensial</option>
+        <option value="Gaya Hidup">Gaya Hidup</option>
+        <option value="Teratur">Teratur</option>
+        <option value="Terencana">Terencana</option>
+        <option value="Sial">Sial</option></select
+      ><br />
+
+      <label for="mood">Mood:</label>
+      <select name="mood" id="mood" required>
+        <option value="Baik">Baik</option>
+        <option value="Tidak Baik">Tidak Baik</option>
+        <option value="Senang">Senang</option>
+        <option value="Buruk">Buruk</option></select
+      ><br />
+
+      <button type="submit">Kirim</button>
+    </form>
+
+    {% if submitted %}
+    <h2>Hasil Prediksi</h2>
+
+    <p><strong>Prediksi Pengeluaran:</strong> {{ predicted_amount }}</p>
+
+    <h3>Rekomendasi:</h3>
+    <ul>
+      {% for recommendation in recommendations %}
+      <li>{{ recommendation }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </body>
+</html>
