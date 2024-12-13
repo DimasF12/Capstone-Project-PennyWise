@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react'; // Import useState and useEf
 import './HasilStrategi.css';
 import { useLocation, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalculator } from '@fortawesome/free-solid-svg-icons';
-import { faMoneyBillWave, faChartLine, faClock, faDollarSign } from '@fortawesome/free-solid-svg-icons';
+import { faCalculator, faMoneyBillWave, faChartLine, faClock, faDollarSign } from '@fortawesome/free-solid-svg-icons';
 
 const HasilStrategi = () => {
   const location = useLocation();
@@ -40,7 +39,7 @@ const HasilStrategi = () => {
     setIsExpanded((prev) => !prev);
   };
 
-  // Check if results are available
+  // Handle the case where no data is available
   if (!location.state || !location.state.hasil) {
     return <div>No data available for investment strategy results.</div>;
   }
