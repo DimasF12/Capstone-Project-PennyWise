@@ -10,3 +10,6 @@ Consumerism, fueled by social media and easy access to credit, has led to carele
 PennyWise, the Smart Expense Tracker, addresses this issue by combining practical budgeting tools with insights into emotional and behavioral spending patterns. By understanding the underlying reasons behind spending habits, users can make more informed financial decisions.
 
 Our platform offers a personalized and engaging experience that encourages users to develop healthier financial habits. By focusing on both practical and emotional aspects of finance, PennyWise stands out as a modern solution for today's financial challenges.
+
+# The Results
+The results of our project the cloud computing and machine learning can be find in the branches of this github
