@@ -3,6 +3,7 @@ import './KalkulatorInvestasi.css';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalculator } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 
 const KalkulatorInvestasi = ({ username }) => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -34,68 +35,40 @@ const KalkulatorInvestasi = ({ username }) => {
     setCurrentStep((prevStep) => prevStep + 1);
   };
 
-  const calculateFutureValue = (initialAmount, monthlyInvestment, annualReturnRate, years) => {
-    let currentAmount = initialAmount;
-    const monthlyReturnRate = annualReturnRate / 12 / 100;
-    const totalMonths = years * 12;
-
-    for (let i = 0; i < totalMonths; i++) {
-      currentAmount += monthlyInvestment;
-      currentAmount *= (1 + monthlyReturnRate);
+  // Validasi input sebelum mengirim
+  const validateInputs = () => {
+    if (!inputs.uangSaatIni || !inputs.targetInvestasi || !inputs.returnInvestasi || !inputs.waktu || !inputs.uangCapai) {
+      setResult('Semua kolom harus diisi.');
+      return false;
     }
-
-    return currentAmount;
+    return true;
   };
 
-  const calculateRequiredMonthlyInvestment = (initialAmount, targetAmount, annualReturnRate, years) => {
-    const monthlyReturnRate = annualReturnRate / 12 / 100;
-    const totalMonths = years * 12;
-    const fvWithoutInvestment = initialAmount * Math.pow(1 + monthlyReturnRate, totalMonths);
-    const futureValueNeeded = targetAmount - fvWithoutInvestment;
-
-    const requiredMonthlyInvestment = futureValueNeeded * monthlyReturnRate / (Math.pow(1 + monthlyReturnRate, totalMonths) - 1);
-    return requiredMonthlyInvestment;
-  };
-
-  const calculateRequiredDuration = (initialAmount, monthlyInvestment, annualReturnRate, targetAmount) => {
-    let currentAmount = initialAmount;
-    const monthlyReturnRate = annualReturnRate / 12 / 100;
-    let months = 0;
-
-    while (currentAmount < targetAmount) {
-      currentAmount += monthlyInvestment;
-      currentAmount *= (1 + monthlyReturnRate);
-      months++;
-    }
-
-    return months / 12;
-  };
-
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    if (!validateInputs()) return;
+  
     const initialAmount = parseFloat(inputs.uangSaatIni.replace(/,/g, ''));
     const monthlyInvestment = parseFloat(inputs.targetInvestasi.replace(/,/g, ''));
     const annualReturnRate = parseFloat(inputs.returnInvestasi);
     const years = parseInt(inputs.waktu, 10);
     const targetAmount = parseFloat(inputs.uangCapai.replace(/,/g, ''));
-
-    const futureValue = calculateFutureValue(initialAmount, monthlyInvestment, annualReturnRate, years);
-
-    if (futureValue >= targetAmount) {
-      setResult(`Selamat! Anda akan memiliki Rp ${futureValue.toFixed(2)} setelah ${years} tahun, yang memenuhi target Anda.`);
-    } else {
-      const solution = window.prompt("Anda tidak akan mencapai target Anda. Apakah Anda ingin meningkatkan investasi bulanan Anda (1) atau memperpanjang durasi (2)? Masukkan 1 atau 2:");
-
-      if (solution === "1") {
-        const requiredMonthlyInvestment = calculateRequiredMonthlyInvestment(initialAmount, targetAmount, annualReturnRate, years);
-        setResult(`Untuk mencapai target Rp ${targetAmount}, Anda perlu berinvestasi Rp ${requiredMonthlyInvestment.toFixed(2)} setiap bulan.`);
-      } else if (solution === "2") {
-        const requiredYears = calculateRequiredDuration(initialAmount, monthlyInvestment, annualReturnRate, targetAmount);
-        setResult(`Untuk mencapai target Rp ${targetAmount}, Anda perlu berinvestasi selama ${requiredYears.toFixed(2)} tahun.`);
-      } else {
-        setResult("Pilihan tidak valid. Silakan masukkan 1 atau 2.");
-      }
+  
+    try {
+      const response = await axios.post('http://127.0.0.1:5000/calculate', {
+        initialAmount,
+        monthlyInvestment,
+        annualReturnRate,
+        years,
+        targetAmount,
+      });
+  
+      setResult(response.data.message);  // Menampilkan hasil perhitungan
+    } catch (error) {
+      console.error('Error calculating investment:', error);
+      setResult('Terjadi kesalahan saat menghitung investasi.');
     }
   };
+  
 
   return (
     <div className="kalkulator-investasi-container">
@@ -115,8 +88,7 @@ const KalkulatorInvestasi = ({ username }) => {
       </div>
 
       <div className="calculator-container">
-        {[
-          { label: 'Jumlah uang yang ingin Anda capai', prefix: 'Rp', fieldName: 'uangCapai' },
+        {[{ label: 'Jumlah uang yang ingin Anda capai', prefix: 'Rp', fieldName: 'uangCapai' },
           { label: 'Jumlah waktu yang Anda perlukan', suffix: 'Tahun lagi', fieldName: 'waktu' },
           { label: 'Uang yang Anda miliki saat ini', prefix: 'Rp', fieldName: 'uangSaatIni' },
           {
@@ -140,10 +112,7 @@ const KalkulatorInvestasi = ({ username }) => {
           { label: 'Target investasi Anda tiap bulan', prefix: 'Rp', fieldName: 'targetInvestasi' },
           { label: 'Anda akan berinvestasi di produk yang returnnya', suffix: '%/Tahun', fieldName: 'returnInvestasi' },
         ].map((input, index) => (
-          <div
-            key={index}
-            className={`input-group ${currentStep > index ? 'visible' : ''}`}
-          >
+          <div key={index} className={`input-group ${currentStep > index ? 'visible' : ''}`}>
             <span className="circle-icon"></span>
             <label className={`input-label ${currentStep === index + 1 ? 'animasi-teks' : ''}`}>
               {input.label}
@@ -154,9 +123,7 @@ const KalkulatorInvestasi = ({ username }) => {
                 {input.buttonOptions.map((option) => (
                   <button
                     key={option.value}
-                    className={`choice-button ${
-                      inputs[input.fieldName] === option.value ? 'active' : ''
-                    }`}
+                    className={`choice-button ${inputs[input.fieldName] === option.value ? 'active' : ''}`}
                     onClick={() => handleButtonClick(input.fieldName, option.value)}
                   >
                     {option.text}
