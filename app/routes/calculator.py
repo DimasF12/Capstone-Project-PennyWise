@@ -1,9 +1,6 @@
-# app/routes/investment.py
-
 from flask import Blueprint, request, jsonify
 from app.service.calculator import calculate_future_value, calculate_required_monthly_investment, calculate_required_duration
 
-# Membuat Blueprint untuk rute investasi
 investment_bp = Blueprint('investment', __name__)
 
 @investment_bp.route('/calculate', methods=['POST'])
