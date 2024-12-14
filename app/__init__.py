@@ -1,13 +1,12 @@
+# app/__init__.py
+
 from flask import Flask
-from config import config
+from app.routes.calculator import investment_bp
 
 def create_app():
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = config.SECRET_KEY
-    app.config['ENV'] = config.FLASK_ENV
 
-    # Tambahkan rute
-    from app.routes.calculator import calculator_bp
-    app.register_blueprint(calculator_bp, url_prefix='/api')
+    # Mendaftarkan Blueprint
+    app.register_blueprint(investment_bp, url_prefix='/investment')
 
     return app

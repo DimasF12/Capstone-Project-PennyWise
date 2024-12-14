@@ -1,3 +1,5 @@
+# app/routes/investment.py
+
 from flask import Blueprint, request, jsonify
 from app.service.calculator import calculate_future_value, calculate_required_monthly_investment, calculate_required_duration
 
@@ -9,8 +11,15 @@ def calculate():
     try:
         # Ambil data dari request
         data = request.json
+        
+        # Cek apakah data yang diperlukan ada
+        required_fields = ['uangSaatIni', 'targetInvestasi', 'returnInvestasi', 'waktu', 'uangCapai', 'solution']
+        missing_fields = [field for field in required_fields if field not in data]
+        
+        if missing_fields:
+            return jsonify({'error': f'Missing {", ".join(missing_fields)}'}), 400
 
-        # Validasi input
+        # Jika semua data ada, lanjutkan perhitungan
         initial_amount = float(data.get('uangSaatIni'))
         monthly_investment = float(data.get('targetInvestasi'))
         annual_return_rate = float(data.get('returnInvestasi'))
@@ -43,11 +52,6 @@ def calculate():
                 }
 
         return jsonify(result)
-
-    except (ValueError, TypeError) as e:
-        # Menangani kesalahan input
-        return jsonify({
-            'message': 'Terjadi kesalahan pada input yang diberikan.',
-            'error': str(e),
-            'code': 400
-        }), 400
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
