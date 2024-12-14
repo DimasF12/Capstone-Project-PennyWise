@@ -69,7 +69,7 @@ const KalkulatorInvestasi = ({ username }) => {
       setResult(response.data.message);  // Menampilkan hasil perhitungan
 
       // Arahkan pengguna ke halaman HasilStrategi
-      navigate('/HasilStrategi', { state: { message: response.data.message } }); // Navigasi ke HasilStrategi.js setelah submit
+      navigate('../hasil/HasilStrategi', { state: { message: response.data.message } });
     } catch (error) {
       console.error('Error calculating investment:', error);
       setResult('Terjadi kesalahan saat menghitung investasi.');

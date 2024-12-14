@@ -4,7 +4,7 @@ import Main from './components/main/main';
 import KalkulatorInvestasi from './components/kalkulator/KalkulatorInvestasi';
 import Perencanaan from './components/perencanaan/Perencanaan';
 import TrackingKeuangan from './components/tracking/TrackingKeuangan';
-import HasilStrategi from './components/kalkulator/HasilStrategi';
+import HasilStrategi from './components/hasil/HasilStrategi';
 
 const App = () => {
   return (
@@ -24,7 +24,7 @@ const App = () => {
           <Route path="/tracking/TrackingKeuangan" element={<TrackingKeuangan username="User" />} />
 
           {/* Route ke halaman hasil strategi */}
-          <Route path="/kalkulator/HasilStrategi" element={<HasilStrategi username="User" />} />
+          <Route path="/hasil/HasilStrategi" element={<HasilStrategi username="User" />} />
         </Routes>
       </div>
     </Router>
