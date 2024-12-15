@@ -60,15 +60,24 @@
     transition: background-color 0.3s ease;
 }
 
-.header-container.success {
-    background-color: #4caf50; /* Green for success */
+.header-container-hasil.success {
+    background-color: #28a745; /* Hijau untuk sukses */
     color: white;
   }
   
-  .header-container.error {
-    background-color: #f44336; /* Red for error */
+  .header-container-hasil.error {
+    background-color: #dc3545; /* Merah untuk error */
     color: white;
   }
+  
+  .success-message {
+    font-weight: bold;
+  }
+  
+  .error-message {
+    font-weight: bold;
+  }
+  
 
 /* Container for detailed results */
 .hasil-detail {

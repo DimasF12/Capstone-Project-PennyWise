@@ -25,6 +25,7 @@ const HasilStrategi = () => {
   // Fungsi untuk memformat angka
   const formatNumber = (value) => {
     if (value === null || value === undefined) return '0';
+    // Membulatkan ke integer dan menghilangkan .00 jika ada
     return Number(value).toLocaleString('id-ID', { maximumFractionDigits: 0 });
   };
 
@@ -92,6 +93,11 @@ const HasilStrategi = () => {
   // Menentukan kelas header berdasarkan message
   const headerClass = hasil.message.includes('Selamat') ? 'success' : 'error';
 
+  // Memastikan durasi tahun tidak menampilkan desimal
+  const cleanMessage = hasil.message.replace(/(\d+\.\d+)( tahun)/g, (match, p1, p2) => {
+    return `${Math.round(p1)}${p2}`; // Menghapus angka desimal dan membulatkan durasi
+  });
+
   return (
     <div className="hasil-strategi-container">
       {/* Navigasi */}
@@ -106,7 +112,7 @@ const HasilStrategi = () => {
       {/* Header */}
       <div className={`header-container-hasil ${headerClass}`}>
         <div className={headerClass === 'success' ? 'success-message' : 'error-message'}>
-          {hasil.message}
+          {cleanMessage}
         </div>
       </div>
 
