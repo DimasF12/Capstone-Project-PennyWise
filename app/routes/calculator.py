@@ -5,50 +5,49 @@ investment_bp = Blueprint('investment', __name__)
 
 @investment_bp.route('/calculate', methods=['POST'])
 def calculate():
+    data = request.get_json()
+    
+    # Debug log: Menampilkan data yang diterima dari frontend
+    print("Data yang diterima di backend:", data)
+    
     try:
-        # Ambil data dari request
-        data = request.json
-        
-        # Cek apakah data yang diperlukan ada
-        required_fields = ['uangSaatIni', 'targetInvestasi', 'returnInvestasi', 'waktu', 'uangCapai', 'solution']
+        # Daftar fields yang diharapkan
+        required_fields = ['uangSaatIni', 'targetInvestasi', 'returnInvestasi', 'waktu', 'uangCapai']
         missing_fields = [field for field in required_fields if field not in data]
-        
+
         if missing_fields:
-            return jsonify({'error': f'Missing {", ".join(missing_fields)}'}), 400
+            return jsonify({'error': f'Missing fields: {", ".join(missing_fields)}'}), 400
 
-        # Jika semua data ada, lanjutkan perhitungan
-        initial_amount = float(data.get('uangSaatIni'))
-        monthly_investment = float(data.get('targetInvestasi'))
-        annual_return_rate = float(data.get('returnInvestasi'))
-        years = int(data.get('waktu'))
-        target_amount = float(data.get('uangCapai'))
+        # Parse data dan lakukan perhitungan
+        initial_amount = float(data['uangSaatIni'])
+        monthly_investment = float(data['targetInvestasi'])
+        annual_return_rate = float(data['returnInvestasi'])
+        years = int(data['waktu'])
+        target_amount = float(data['uangCapai'])
 
-        # Hitung nilai masa depan
+        # Kalkulasi nilai masa depan
         future_value = calculate_future_value(initial_amount, monthly_investment, annual_return_rate, years)
 
-        # Jika nilai masa depan lebih besar atau sama dengan target, beri hasil
+        # Cek apakah future_value sudah cukup
         if future_value >= target_amount:
-            result = {
-                'message': f"Selamat! Anda akan memiliki Rp {future_value:.2f} setelah {years} tahun, yang memenuhi target Anda."
-            }
+            return jsonify({
+                'message': f"Selamat! Anda akan memiliki Rp {future_value:,.2f} setelah {years} tahun, yang memenuhi target Anda.",
+                'hasilInvestasi': future_value,
+                'totalUangDibutuhkan': target_amount
+            }), 200
         else:
-            solution = data.get('solution')  # Ambil solusi dari request
-            if solution == "1":
-                required_monthly_investment = calculate_required_monthly_investment(initial_amount, target_amount, annual_return_rate, years)
-                result = {
-                    'message': f"Untuk mencapai target Rp {target_amount}, Anda perlu berinvestasi Rp {required_monthly_investment:.2f} setiap bulan."
-                }
-            elif solution == "2":
-                required_years = calculate_required_duration(initial_amount, monthly_investment, annual_return_rate, target_amount)
-                result = {
-                    'message': f"Untuk mencapai target Rp {target_amount}, Anda perlu berinvestasi selama {required_years:.2f} tahun."
-                }
-            else:
-                result = {
-                    'message': "Pilihan tidak valid. Silakan masukkan 1 atau 2."
-                }
+            required_monthly_investment = calculate_required_monthly_investment(initial_amount, target_amount, annual_return_rate, years)
+            required_duration = calculate_required_duration(initial_amount, monthly_investment, annual_return_rate, target_amount)
 
-        return jsonify(result)
-    
+            return jsonify({
+                'message': (
+                    f"Strategi Anda belum cocok. Anda memerlukan investasi bulanan sebesar "
+                    f"Rp {required_monthly_investment:,.2f} setiap bulan selama {years} tahun, atau perpanjang durasi "
+                    f"hingga {required_duration:.2f} tahun untuk mencapai target."
+                ),
+                'hasilInvestasi': future_value,
+                'totalUangDibutuhkan': target_amount
+            }), 200
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        print(f"Error: {str(e)}")  # Menampilkan error jika ada
+        return jsonify({'error': f'Error: {str(e)}'}), 500
