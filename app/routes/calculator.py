@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from app.service.calculator import calculate_future_value, calculate_required_monthly_investment, calculate_required_duration
+import math
 
 investment_bp = Blueprint('investment', __name__)
 
@@ -31,7 +32,7 @@ def calculate():
         # Cek apakah future_value sudah cukup
         if future_value >= target_amount:
             return jsonify({
-                'message': f"Selamat! Anda akan memiliki Rp {future_value:,.2f} setelah {years} tahun, yang memenuhi target Anda.",
+                'message': f"Selamat! Anda akan memiliki Rp {future_value:,.2f} setelah {years} tahun, yang memenuhi target Anda.🥳🥳🤩🤩",
                 'hasilInvestasi': future_value,
                 'totalUangDibutuhkan': target_amount
             }), 200
@@ -39,11 +40,12 @@ def calculate():
             required_monthly_investment = calculate_required_monthly_investment(initial_amount, target_amount, annual_return_rate, years)
             required_duration = calculate_required_duration(initial_amount, monthly_investment, annual_return_rate, target_amount)
 
+            # Pembulatan hasil durasi ke angka bulat
             return jsonify({
                 'message': (
                     f"Strategi Anda belum cocok. Anda memerlukan investasi bulanan sebesar "
                     f"Rp {required_monthly_investment:,.2f} setiap bulan selama {years} tahun, atau perpanjang durasi "
-                    f"hingga {required_duration:.2f} tahun untuk mencapai target."
+                    f"hingga {required_duration} tahun untuk mencapai target."  # Durasi tanpa koma
                 ),
                 'hasilInvestasi': future_value,
                 'totalUangDibutuhkan': target_amount

@@ -1,3 +1,5 @@
+import math
+
 def calculate_future_value(initial_amount, monthly_investment, annual_return_rate, years):
     try:
         # Menyusun jumlah investasi awal
@@ -10,7 +12,8 @@ def calculate_future_value(initial_amount, monthly_investment, annual_return_rat
             current_amount += monthly_investment  # Menambahkan investasi bulanan
             current_amount *= (1 + monthly_return_rate)  # Menghitung return investasi
 
-        return current_amount
+        # Pembulatan ke angka bulat terbesar
+        return math.ceil(current_amount)
     except Exception as e:
         raise ValueError(f"Error calculating future value: {e}")
 
@@ -30,7 +33,9 @@ def calculate_required_monthly_investment(initial_amount, target_amount, annual_
 
         # Menghitung investasi bulanan yang diperlukan
         required_monthly_investment = future_value_needed * monthly_return_rate / ((1 + monthly_return_rate) ** total_months - 1)
-        return required_monthly_investment
+
+        # Pembulatan ke angka bulat terbesar
+        return math.ceil(required_monthly_investment)
     except Exception as e:
         raise ValueError(f"Error calculating required monthly investment: {e}")
 
@@ -46,7 +51,8 @@ def calculate_required_duration(initial_amount, monthly_investment, annual_retur
             current_amount *= (1 + monthly_return_rate)
             months += 1
 
-        # Mengembalikan hasil dalam tahun
-        return months / 12
+        # Pembulatan durasi ke angka bulat (tahun)
+        return math.ceil(months / 12)  # Pastikan durasi di dalam tahun adalah integer
     except Exception as e:
         raise ValueError(f"Error calculating required duration: {e}")
+

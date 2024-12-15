@@ -30,7 +30,7 @@ def calculate():
 
         if future_value >= target_amount:
             return jsonify({
-                'message': f"Selamat! Anda akan memiliki Rp {future_value:,.2f} setelah {years} tahun, yang memenuhi target Anda.",
+                'message': f"Selamat! Anda akan memiliki Rp {future_value:,.2f} setelah {years} tahun, yang memenuhi target Anda.🥳🥳🤩🤩",
                 'hasilInvestasi': future_value,
                 'totalUangDibutuhkan': target_amount
             }), 200
@@ -41,7 +41,7 @@ def calculate():
                 'message': (
                     f"Strategi Anda belum cocok. Anda memerlukan investasi bulanan sebesar "
                     f"Rp {required_monthly_investment:,.2f} setiap bulan selama {years} tahun, atau perpanjang durasi "
-                    f"hingga {required_duration:.2f} tahun untuk mencapai target."
+                    f"hingga {required_duration:.2f} tahun untuk mencapai target.😟😟"
                 ),
                 'hasilInvestasi': future_value,
                 'totalUangDibutuhkan': target_amount
