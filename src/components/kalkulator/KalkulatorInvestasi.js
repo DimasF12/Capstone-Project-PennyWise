@@ -9,15 +9,18 @@ const KalkulatorInvestasi = ({ username }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [inputs, setInputs] = useState({});
   const [result, setResult] = useState(null);
-  const navigate = useNavigate(); // Hook untuk navigasi
+  const [headerColor, setHeaderColor] = useState('');
+  const navigate = useNavigate();
 
+  // Format angka dengan koma
   const formatNumber = (value) => {
     if (!value) return '';
     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
 
+  // Tangani perubahan input
   const handleInputChange = (e, fieldName) => {
-    const rawValue = e.target.value.replace(/,/g, '');
+    const rawValue = e.target.value.replace(/,/g, ''); // Hapus koma dari input
     if (!isNaN(rawValue) && rawValue !== '') {
       setInputs({ ...inputs, [fieldName]: formatNumber(rawValue) });
     } else if (rawValue === '') {
@@ -25,25 +28,33 @@ const KalkulatorInvestasi = ({ username }) => {
     }
   };
 
+  // Tangani event ketika tombol ditekan (Enter)
   const handleKeyPress = (e, index) => {
     if (e.key === 'Enter' && currentStep === index + 1) {
       setCurrentStep((prevStep) => prevStep + 1);
     }
   };
 
+  // Tangani klik pada button untuk input yang berupa group tombol
   const handleButtonClick = (fieldName, value) => {
     setInputs({ ...inputs, [fieldName]: value });
     setCurrentStep((prevStep) => prevStep + 1);
   };
 
+  // Validasi apakah semua input sudah terisi
   const validateInputs = () => {
-    if (!inputs.uangSaatIni || !inputs.targetInvestasi || !inputs.returnInvestasi || !inputs.waktu || !inputs.uangCapai || !inputs.menabung || !inputs.dana) {
-      setResult('Semua kolom harus diisi.');
-      return false;
+    const requiredFields = ['uangSaatIni', 'targetInvestasi', 'returnInvestasi', 'waktu', 'uangCapai'];
+    for (let field of requiredFields) {
+      const rawValue = inputs[field]?.replace(/,/g, '');
+      if (!rawValue || isNaN(rawValue) || parseFloat(rawValue) <= 0) {
+        setResult(`Kolom "${field}" harus berupa angka positif.`);
+        return false;
+      }
     }
     return true;
-  };
+  };  
 
+  // Tangani submit untuk perhitungan
   const handleSubmit = async () => {
     if (!validateInputs()) return;
 
@@ -52,24 +63,51 @@ const KalkulatorInvestasi = ({ username }) => {
     const annualReturnRate = parseFloat(inputs.returnInvestasi);
     const years = parseInt(inputs.waktu, 10);
     const targetAmount = parseFloat(inputs.uangCapai.replace(/,/g, ''));
-    const frequency = inputs.menabung;  // Nilai dari "Setiap Bulan" atau "Setiap Tahun"
-    const additionTime = inputs.dana;   // Nilai dari "Akhir Bulan" atau "Awal Bulan"
+    console.log("Data yang dikirim:", {
+      uangSaatIni: initialAmount,
+      targetInvestasi: monthlyInvestment,
+      returnInvestasi: annualReturnRate,
+      waktu: years,
+      uangCapai: targetAmount
+    });    
 
     try {
+      // Kirim data ke backend
       const response = await axios.post('http://127.0.0.1:5000/calculate', {
-        initialAmount,
-        monthlyInvestment,
-        annualReturnRate,
-        years,
-        targetAmount,
-        frequency,    // Mengirimkan frekuensi tabungan
-        additionTime, // Mengirimkan waktu penambahan dana
+        uangSaatIni: initialAmount,
+        targetInvestasi: monthlyInvestment,
+        returnInvestasi: annualReturnRate,
+        waktu: years,
+        uangCapai: targetAmount,
       });
 
-      setResult(response.data.message);  // Menampilkan hasil perhitungan
+      if (response.status === 200) {
+        const result = response.data;
 
-      // Arahkan pengguna ke halaman HasilStrategi
-      navigate('../hasil/HasilStrategi', { state: { message: response.data.message } });
+        // Menentukan warna header berdasarkan hasil
+        if (result.message.includes("Selamat")) {
+          setHeaderColor('green');
+        } else {
+          setHeaderColor('red');
+        }
+
+        // Kirimkan data perhitungan ke halaman HasilStrategi
+        navigate('../hasil/HasilStrategi', {
+          state: {
+            hasil: {
+              totalUangDibutuhkan: result.totalUangDibutuhkan,
+              uangSaatIni: initialAmount,
+              jumlahInvestasiBulanan: monthlyInvestment,
+              returnInvestasi: annualReturnRate,
+              lamaInvestasi: years,
+              hasilInvestasi: result.hasilInvestasi,
+              message: result.message,
+            }
+          }
+        });
+      } else {
+        setResult('Terjadi kesalahan pada permintaan.');
+      }
     } catch (error) {
       console.error('Error calculating investment:', error);
       setResult('Terjadi kesalahan saat menghitung investasi.');
@@ -86,7 +124,8 @@ const KalkulatorInvestasi = ({ username }) => {
         </div>
       </div>
 
-      <div className="header-container">
+      {/* Mengganti warna header sesuai hasil */}
+      <div className="header-container" style={{ backgroundColor: headerColor }}>
         <div className="profile-icon"></div>
         <div className="greeting-text">Hi, {username}</div>
         <div className="company-name">Pennywise</div>
@@ -94,7 +133,8 @@ const KalkulatorInvestasi = ({ username }) => {
       </div>
 
       <div className="calculator-container">
-        {[{ label: 'Jumlah uang yang ingin Anda capai', prefix: 'Rp', fieldName: 'uangCapai' },
+        {[
+          { label: 'Jumlah uang yang ingin Anda capai', prefix: 'Rp', fieldName: 'uangCapai' },
           { label: 'Jumlah waktu yang Anda perlukan', suffix: 'Tahun lagi', fieldName: 'waktu' },
           { label: 'Uang yang Anda miliki saat ini', prefix: 'Rp', fieldName: 'uangSaatIni' },
           {

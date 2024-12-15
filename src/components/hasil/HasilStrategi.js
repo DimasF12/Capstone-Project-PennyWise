@@ -2,47 +2,95 @@ import React, { useState, useEffect } from 'react';
 import './HasilStrategi.css';
 import { useLocation, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalculator, faMoneyBillWave, faChartLine, faClock, faDollarSign } from '@fortawesome/free-solid-svg-icons';
-
+import { faCalculator } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 
 const HasilStrategi = () => {
   const location = useLocation();
 
-  // State untuk mengelola tampilan detail
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [isSuccessful, setIsSuccessful] = useState(true);
+  // Nilai default untuk input data jika tidak tersedia
+  const inputData = location.state?.hasil || {
+    uangSaatIni: 0,
+    jumlahInvestasiBulanan: 0,
+    returnInvestasi: 0,
+    lamaInvestasi: 0,
+    totalUangDibutuhkan: 0,
+  };
 
-  // Ambil data dari state lokasi dengan nilai default untuk menghindari error
-  const {
-    totalUangDibutuhkan = 0,
-    uangSaatIni = 0,
-    jumlahInvestasiBulanan = 0,
-    returnInvestasi = 0,
-    lamaInvestasi = 0,
-    hasilInvestasi = 0,
-    inputUser = {}, // Ambil data input pengguna jika tersedia
-  } = location.state?.hasil || {};
+  // State untuk menyimpan hasil dari API
+  const [hasil, setHasil] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Fungsi untuk memformat angka dengan pemisah ribuan
+  // Fungsi untuk memformat angka
   const formatNumber = (value) => {
     if (value === null || value === undefined) return '0';
-    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return Number(value).toLocaleString('id-ID', { maximumFractionDigits: 0 });
   };
 
-  // Cek apakah strategi berhasil berdasarkan hasil investasi
+  // Memanggil API untuk perhitungan
   useEffect(() => {
-    setIsSuccessful(hasilInvestasi >= totalUangDibutuhkan);
-  }, [hasilInvestasi, totalUangDibutuhkan]);
+    const apiUrl = 'http://127.0.0.1:5000/calculate'; // URL API Flask
 
-  // Fungsi untuk toggle tampilan detail investasi
-  const toggleDetails = () => {
-    setIsExpanded((prev) => !prev);
-  };
+    const fetchData = async () => {
+      try {
+        console.log('Mengirim data ke API:', inputData);
+        const response = await axios.post(apiUrl, {
+          uangSaatIni: Number(inputData.uangSaatIni),
+          targetInvestasi: Number(inputData.jumlahInvestasiBulanan),
+          returnInvestasi: Number(inputData.returnInvestasi),
+          waktu: Number(inputData.lamaInvestasi),
+          uangCapai: Number(inputData.totalUangDibutuhkan),
+        });
 
-  // Tangani kasus jika data tidak tersedia
-  if (!location.state || !location.state.hasil) {
-    return <div>No data available for investment strategy results.</div>;
+        if (response.data) {
+          setHasil(response.data); // Menyimpan respons backend
+        } else {
+          throw new Error('Respons API tidak valid.');
+        }
+      } catch (err) {
+        console.error('Error saat memanggil API:', err);
+        setError(err.message || 'Terjadi kesalahan.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    // Validasi input sebelum memanggil API
+    const isInputValid =
+      inputData &&
+      inputData.uangSaatIni >= 0 &&
+      inputData.jumlahInvestasiBulanan >= 0 &&
+      inputData.returnInvestasi > 0 &&
+      inputData.lamaInvestasi > 0 &&
+      inputData.totalUangDibutuhkan >= 0;
+
+    if (isInputValid) {
+      setLoading(true);
+      fetchData();
+    } else {
+      setError('Input tidak lengkap atau tidak valid.');
+      setLoading(false);
+    }
+  }, [inputData]);
+
+  // Menampilkan loading state
+  if (loading) {
+    return <div className="loading">Loading...</div>;
   }
+
+  // Menampilkan error state
+  if (error) {
+    return <div className="error">Error: {error}</div>;
+  }
+
+  // Jika hasil API tidak ada
+  if (!hasil) {
+    return <div>No data available.</div>;
+  }
+
+  // Menentukan kelas header berdasarkan message
+  const headerClass = hasil.message.includes('Selamat') ? 'success' : 'error';
 
   return (
     <div className="hasil-strategi-container">
@@ -55,49 +103,32 @@ const HasilStrategi = () => {
         </div>
       </div>
 
-      {/* Header dengan status strategi */}
-      <div className={`header-container-hasil ${isSuccessful ? 'success' : 'error'}`}>
-        {isSuccessful ? (
-          <div className="success-message">Strateginya cocok untuk mencapai mimpimu! 😃🎉</div>
-        ) : (
-          <div className="error-message">Strategi gagal! Hasil investasi tidak mencukupi.</div>
-        )}
+      {/* Header */}
+      <div className={`header-container-hasil ${headerClass}`}>
+        <div className={headerClass === 'success' ? 'success-message' : 'error-message'}>
+          {hasil.message}
+        </div>
       </div>
 
-      {/* Menampilkan Input User */}
+      {/* Input Pengguna */}
       <div className="user-input-container">
         <h2>Input Pengguna</h2>
-        <p><strong>Target Uang:</strong> Rp {formatNumber(inputUser.targetUang || 0)}</p>
-        <p><strong>Return yang Diinginkan:</strong> {inputUser.persenReturn || 0}%/Tahun</p>
-        <p><strong>Lama Investasi:</strong> {inputUser.lamaInvestasi || 0} Tahun</p>
+        <p><strong>Uang Saat Ini:</strong> Rp {formatNumber(inputData.uangSaatIni)}</p>
+        <p><strong>Investasi Bulanan:</strong> Rp {formatNumber(inputData.jumlahInvestasiBulanan)}</p>
+        <p><strong>Return Investasi:</strong> {inputData.returnInvestasi}%/Tahun</p>
+        <p><strong>Lama Investasi:</strong> {inputData.lamaInvestasi} Tahun</p>
+        <p><strong>Target Uang:</strong> Rp {formatNumber(inputData.totalUangDibutuhkan)}</p>
       </div>
 
-      {/* Detail hasil investasi */}
+      {/* Hasil Investasi */}
       <div className="hasil-detail">
         <div className="hasil-detail-top">
-          <h2>Total Uang yang Kamu Butuhkan</h2>
-          <p className="amount">Rp {formatNumber(totalUangDibutuhkan)}</p>
+          <h2>Hasil Investasi</h2>
+          <p className="amount">Rp {formatNumber(hasil.hasilInvestasi)}</p>
         </div>
-
-        {/* Tombol toggle untuk detail */}
-        <div className="hasil-detail-toggle" onClick={toggleDetails}>
-          <h3>Detail Investasi</h3>
-          <span>{isExpanded ? '▲' : '▼'}</span>
-        </div>
-
-        {isExpanded && (
-          <div className="hasil-detail-down">
-            <p><FontAwesomeIcon icon={faDollarSign} /> Uangmu saat ini: Rp {formatNumber(uangSaatIni)}</p>
-            <p><FontAwesomeIcon icon={faMoneyBillWave} /> Jumlah Investasi/bulan: Rp {formatNumber(jumlahInvestasiBulanan)}</p>
-            <p><FontAwesomeIcon icon={faChartLine} /> Return investasi: {returnInvestasi}%/Tahun</p>
-            <p><FontAwesomeIcon icon={faClock} /> Lama investasi: {lamaInvestasi} Tahun</p>
-            <p><FontAwesomeIcon icon={faMoneyBillWave} /> Hasil Investasi: Rp {formatNumber(hasilInvestasi)}</p>
-          </div>
-        )}
       </div>
     </div>
   );
 };
 
 export default HasilStrategi;
-
