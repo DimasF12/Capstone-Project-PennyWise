@@ -1,0 +1,120 @@
+/* Main container */
+.main-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #05a0bb;
+    min-height: 100vh;
+    box-sizing: border-box;
+    border-radius: 10px;
+  }
+  
+  /* Header container */
+  .header-container {
+    width: 90%;
+    background: rgb(14, 181, 167);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+  
+  .profile-icon {
+    width: 40px;
+    height: 40px;
+    background-color: #d9d9d9;
+    border-radius: 50%;
+    margin-bottom: 16px;
+  }
+  
+  .greeting-text {
+    color: #e3f2fd;
+    font-size: 24px;
+    font-weight: 800;
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 8px;
+  }
+  
+  .company-name {
+    color: #c1c1c1;
+    font-size: 17px;
+    font-weight: 400;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  .tagline {
+    color: #9e9e9e;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  /* Section title */
+  .section-title {
+    font-size: 18px;
+    font-weight: 850;
+    color: rgb(255, 255, 255);
+    margin-bottom: 20px;
+    font-family: 'Inter', sans-serif;
+    margin-right: 250px;
+  }
+  
+  /* Feature group */
+  .feature-group {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+  
+  .feature-box {
+    width: 160px;
+    height: 120px;
+    background-color: #e3f2fd;
+    background: transparent;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    padding: 10px;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Efek transisi */
+  }
+  
+    .feature-box:hover {
+        background-color: #b2ebf2; /* Warna lebih gelap saat hover */
+        transform: scale(1.05); /* Sedikit memperbesar box */
+        text-decoration: none;
+    }
+
+    .feature-box:hover .feature-text {
+        transform: scale(1.05);
+        color: white; /* Mengubah warna teks menjadi putih saat hover */
+        text-decoration: none;
+    }
+
+    .feature-box:hover .feature-icon{
+      color: white;
+    }
+
+  .feature-icon{
+    color: black;
+  }
+
+  .feature-text {
+    margin-top: 15px;
+    font-size: 19px;
+    font-weight: 700;
+    color: black;
+    text-align: center;
+  }

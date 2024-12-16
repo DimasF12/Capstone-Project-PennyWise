@@ -1,0 +1,145 @@
+/* Main container */
+.perencanaan-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #05a0bb;
+    min-height: 100vh;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+/* Header container */
+.perencanaan-header {
+    width: 90%;
+    background: rgba(16, 232, 214, 0.8);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.perencanaan-profile-icon {
+    width: 40px;
+    height: 40px;
+    background-color: #d9d9d9;
+    border-radius: 50%;
+    margin-bottom: 16px;
+}
+
+.perencanaan-greeting-text {
+    color: #e3f2fd;
+    font-size: 24px;
+    font-weight: 800;
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 8px;
+}
+
+.perencanaan-company-name {
+    color: #c1c1c1;
+    font-size: 17px;
+    font-weight: 400;
+    font-family: 'Inter', sans-serif;
+}
+
+.perencanaan-tagline {
+    color: #9e9e9e;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Section title */
+.perencanaan-section-title {
+    font-size: 18px;
+    font-weight: 850;
+    color: rgb(255, 255, 255);
+    margin-bottom: 20px;
+    font-family: 'Inter', sans-serif;
+    margin-right: 250px;
+}
+
+/* Feature group */
+.perencanaan-feature-group {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+
+.perencanaan-feature-box {
+    width: 160px;
+    height: 120px;
+    background-color: #e3f2fd;
+    background: transparent;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    padding: 10px;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Efek transisi */
+}
+
+.perencanaan-feature-box:hover {
+    background-color: #b2ebf2; /* Warna lebih gelap saat hover */
+    transform: scale(1.05); /* Sedikit memperbesar box */
+    text-decoration: none;
+}
+
+.perencanaan-feature-box:hover .perencanaan-feature-text {
+    transform: scale(1.05);
+    color: white; /* Mengubah warna teks menjadi putih saat hover */
+    text-decoration: none;
+}
+
+.perencanaan-feature-box:hover .perencanaan-feature-icon {
+    color: white;
+}
+
+.perencanaan-feature-icon {
+    color: black;
+}
+
+.perencanaan-feature-text {
+    margin-top: 15px;
+    font-size: 19px;
+    font-weight: 700;
+    color: black;
+    text-align: center;
+}
+.perencanaan-back-button{
+    background: transparent;
+    border: none;
+    padding-bottom: 18px;
+    cursor: pointer;
+    font-weight: 900;
+    font-size: 20px;
+    color: rgb(255, 255, 255);
+    margin-right: 450px;
+}
+
+.perencanaan-back-button:hover{
+    color: white;
+    transform: scale(1.05);
+    transition: transform 0.2s ease;
+}
+
+@media only screen and (max-width: 600px) {
+    .perencanaan-back-button{
+        margin-right: 400px;
+    }
+    .perencanaan-section-title {
+        margin-right: 230px;
+    }
+}
