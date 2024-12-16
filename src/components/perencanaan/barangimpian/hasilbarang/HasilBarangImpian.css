@@ -1,0 +1,207 @@
+/* HasilStrategi.css */
+
+/* CSS Variables for easier maintenance */
+:root {
+    --primary-color: #02697b;
+    --secondary-color: rgba(16, 232, 214, 0.8);
+    --text-color: #ffffff;
+    --dark-text-color: #333;
+    --highlight-color: #0f95e9;
+    --icon-color: #2980b9;
+    --error-color: red;
+    --font-family: 'Inter', sans-serif;
+}
+
+/* Main container for the result strategy */
+.hasil-strategi-container {
+    background-color: var(--primary-color);
+    padding: 24px;
+    border-radius: 12px;
+    max-width: 500px;
+    margin: 0 auto;
+    color: var(--text-color);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Navigation bar */
+.nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+/* Title styles */
+.nav-title {
+    display: flex;
+    align-items: center;
+}
+
+.calculator-icon {
+    font-size: 24px;  
+    color: var(--text-color);     
+    margin-right: 10px; 
+}
+
+.title-text {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+/* Header section */
+.header-container {
+    width: 90%;
+    background: var(--secondary-color);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.header-container.success {
+    background-color: #4caf50; /* Green for success */
+}
+
+.header-container.error {
+    background-color: #f44336; /* Red for error */
+}
+
+.profile-icon {
+    width: 40px;
+    height: 40px;
+    background-color: #d9d9d9;
+    border-radius: 50%;
+    margin-left: auto; /* Pushes the icon to the right */
+}
+
+/* Container for detailed results */
+.hasil-detail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 20px auto;
+    color: #263238;
+}
+
+/* Title styles */
+.hasil-detail h2 {
+    font-size: 24px;
+    color: rgb(0, 0, 0);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Paragraph styles */
+.hasil-detail p {
+    font-size: 18px;
+    color: var(--text-color);
+    text-align: center;
+    line-height: 1.5;
+}
+
+/* Top section styling */
+.hasil-detail-top {
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+/* Heading style for the top section */
+.hasil-detail-top h2 {
+    font-size: 1.5em;
+    margin: 0;
+    color: #333;
+}
+
+/* Amount styling */
+.amount {
+    font-size: 1.2em;
+    color: #2c3e50;
+    font-weight: bold;
+}
+
+/* Toggle button styling */
+.hasil-detail-toggle {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    font-weight: bold;
+    color: #ffffff;
+    transition: color 0.3s ease;
+}
+
+/* Change color on hover for the toggle */
+.hasil-detail-toggle:hover {
+    color: var(--highlight-color);
+}
+
+/* Down section styling */
+.hasil-detail-down {
+    padding: 10px 0;
+}
+
+/* Paragraph styling for the details */
+.hasil-detail-down p {
+    margin: 5px 0;
+    display: flex;
+    align-items: center;
+}   
+
+/* Icon styling */
+.hasil-detail-down p svg {
+    margin-right: 8px; /* Space between icon and text */
+    color: #2980b9; /* Color for the icons */
+    font-size: 1.2em; /* Size for the icons */
+}
+
+/* Back button styles */
+.back-button {
+    background: none;
+    border: none;
+    color: #050404;
+    font-size: 20px;
+    cursor: pointer;
+    font-weight: 900;
+    text-decoration: none;
+}
+
+/* Back button hover effect */
+.back-button:hover {
+    background-color: #ffffff; /* Darker shade on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hasil-strategi-container {
+        padding: 16px; /* Adjust padding for smaller screens */
+    }
+
+    .hasil-detail {
+        padding: 15px; /* Adjust padding for smaller screens */
+    }
+
+    .hasil-detail h2 {
+        font-size: 20px; /* Smaller title on mobile */
+    }
+
+    .hasil-detail p {
+        font-size: 16px; /* Smaller text on mobile */
+    }
+
+    .back-button {
+        padding: 8px 16px; /* Smaller button padding on mobile */
+        font-size: 14px; /* Smaller font size for mobile */
+    }
+}
